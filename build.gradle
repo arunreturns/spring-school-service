@@ -36,5 +36,7 @@ dependencies {
     // end::actuator[]
     compile 'org.springframework.boot:spring-boot-starter-jdbc'
     compile 'org.postgresql:postgresql'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.1'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.6.1'
     testCompile("junit:junit")
 }
