@@ -4,7 +4,13 @@ public class Marks {
 	private String studentName;
 	private String subjectName;
 	private Integer mark;
-	
+	private String evaluatorName;
+	public String getEvaluatorName() {
+		return evaluatorName;
+	}
+	public void setEvaluatorName(String evaluatorName) {
+		this.evaluatorName = evaluatorName;
+	}
 	public String getSubjectName() {
 		return subjectName;
 	}

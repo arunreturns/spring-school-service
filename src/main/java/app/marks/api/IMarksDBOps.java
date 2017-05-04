@@ -9,7 +9,7 @@ public interface IMarksDBOps {
 	
 	public boolean updateMarksForStudent(String studentName, String subjectName, Integer marks);
 	
-	public boolean addMarksForStudent(String studentName, String subjectName, Integer marks);
+	public boolean addMarksForStudent(String studentName, String subjectName, Integer marks, String evaluatorName);
 	
 	public List<Marks> getMarksForStudent(String studentName);
 }

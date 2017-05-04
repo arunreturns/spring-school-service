@@ -84,14 +84,18 @@ public class MarksDBOps implements IMarksDBOps {
 	}
 	
 	@Override
-	public boolean addMarksForStudent(String studentName, String subjectName, Integer marks) {
+	public boolean addMarksForStudent(String studentName, String subjectName, Integer marks, String evaluatorName) {
 		Integer studentId = getStudentId(studentName);
-		String query = "INSERT INTO MARKS(subjectName, marks, studentName, studentId) VALUES (:subjectName, :marks, :studentName, :studentId)";
+		Integer evaluatorId = getTeacherId(evaluatorName);
+		String query = "INSERT INTO MARKS(subjectName, marks, studentName, studentId, evaluatorId, evaluatorName) " + 
+			       "VALUES (:subjectName, :marks, :studentName, :studentId, :evaluatorId, :evaluatorName)";
 
         MapSqlParameterSource param = new MapSqlParameterSource()
                 .addValue("marks", marks)
                 .addValue("subjectName", subjectName)
                 .addValue("studentId", studentId)
+                .addValue("evaluatorId", evaluatorId)
+                .addValue("evaluatorName", evaluatorName)
                 .addValue("studentName", studentName);
 
         int updateCount = namedParameterJdbcTemplate.update(query, param);
@@ -108,6 +112,18 @@ public class MarksDBOps implements IMarksDBOps {
         Integer studentId = namedParameterJdbcTemplate.queryForObject(query, param, Integer.class);
         logger.info("Inside getStudentId => studentId is " + studentId);
         return studentId;
+		
+	}
+
+	private Integer getTeacherId(String teacherName) {
+		String query = "SELECT teacherId FROM TEACHERS WHERE teacherName = :teacherName";
+
+        MapSqlParameterSource param = new MapSqlParameterSource()
+                .addValue("teacherName", teacherName);
+
+        Integer teacherId = namedParameterJdbcTemplate.queryForObject(query, param, Integer.class);
+        logger.info("Inside getTeacherId => teacherId is " + teacherId);
+        return teacherId;
 		
 	}
 }

@@ -11,9 +11,6 @@ CREATE TABLE users(
   UPD_DATE TIMESTAMP NOT NULL DEFAULT now()
 );
 
-INSERT INTO users (added_by, add_date, userName, userRole, isAdmin) VALUES ('adminuser', now(), 'adminuser', 'admin', true);
-SELECT * FROM users;
-
 DROP TABLE students CASCADE;
 CREATE TABLE students (
   studentId SERIAL UNIQUE,
@@ -26,12 +23,27 @@ CREATE TABLE students (
   UPD_DATE TIMESTAMP NOT NULL DEFAULT now()
 );
 
+DROP TABLE teachers CASCADE;
+CREATE TABLE teachers (
+  teacherId SERIAL UNIQUE,
+  teacherName VARCHAR(25),
+  teacherSubjects VARCHAR(15)[],
+  dateOfBirth DATE, 
+  PRIMARY KEY (teacherName, dateOfBirth),
+  ADDED_BY VARCHAR(25),
+  ADD_DATE TIMESTAMP,
+  UPD_BY VARCHAR(25),
+  UPD_DATE TIMESTAMP NOT NULL DEFAULT now()
+);
+
 DROP TABLE marks CASCADE;
 CREATE TABLE marks (
   subjectName VARCHAR(25), 
   marks INT, 
   studentId SERIAL REFERENCES students(studentId),
   studentName VARCHAR(25),
+  teacherId SERIAL REFERENCES teachers(teacherId),
+  awardedBy VARCHAR(25),
   ADDED_BY VARCHAR(25),
   ADD_DATE TIMESTAMP,
   UPD_BY VARCHAR(25),

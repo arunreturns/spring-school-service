@@ -26,7 +26,7 @@ public class MarksService implements IMarksService {
 
 	@Override
 	public boolean addMarksForStudent(Marks studentMarks) {
-		return dbOps.addMarksForStudent(studentMarks.getStudentName(), studentMarks.getSubjectName(), studentMarks.getMark());
+		return dbOps.addMarksForStudent(studentMarks.getStudentName(), studentMarks.getSubjectName(), studentMarks.getMark(), studentMarks.getEvaluatorName());
 	}
 
 	@Override
