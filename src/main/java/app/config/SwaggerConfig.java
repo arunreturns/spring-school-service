@@ -18,6 +18,19 @@ public class SwaggerConfig {
           .select()                                  
           .apis(RequestHandlerSelectors.any())              
           .paths(PathSelectors.any())                          
-          .build();                                           
+          .build()
+          .apiInfo(apiInfo());
     }
+}
+
+private ApiInfo apiInfo() {
+    ApiInfo apiInfo = new ApiInfo(
+      "School Service REST API",
+      "APIs used to functioning of a school admin systems.",
+      "API TOS",
+      "Terms Of Service",
+      "arunreturns@gmail.com",
+      "MIT Licence",
+      "Why?");
+    return apiInfo;
 }

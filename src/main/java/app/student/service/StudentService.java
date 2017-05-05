@@ -23,4 +23,9 @@ public class StudentService implements IStudentService {
 	public boolean addStudent(Student student) {
 		return dbOps.addStudent(student.getStudentName(), student.getDateOfBirth());
 	}
+	
+	@Override
+	public Student getStudentDetailsById(Integer studentId) {
+		return dbOps.getStudentDetailsById(studentId);
+	}
 }

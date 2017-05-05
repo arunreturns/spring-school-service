@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.teacher.api.ITeacherService;
 import app.teacher.dto.Teacher;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 public class TeacherController {
@@ -24,12 +25,14 @@ public class TeacherController {
 	}
 
 	@RequestMapping(path="/teachers", method = RequestMethod.GET)
+	@ApiOperation(value = "View a list of teachers", response = List.class)
 	public List<Teacher> getTeachers() {
 		logger.info("Inside getTeachers");
 		return teacherService.getTeachers();
 	}
 	
 	@RequestMapping(path="/teacher", method = RequestMethod.POST)
+	@ApiOperation(value = "Add a teacher", response = Boolean.class)
 	public boolean addTeacher(@RequestBody Teacher teacher) {
 		logger.info("Inside addTeacher");
 		return teacherService.addTeacher(teacher);

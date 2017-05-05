@@ -8,4 +8,5 @@ import app.student.dto.Student;
 public interface IStudentDBOps {
 	public List<Student> getStudentsFromDB();
 	public boolean addStudent(String studentName, Date dateOfBirth);
+	public Student getStudentDetailsById(Integer studentId);
 }
