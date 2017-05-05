@@ -1,10 +1,18 @@
 package app.marks.dto;
 
 public class Marks {
+	private String markId;
 	private String studentName;
 	private String subjectName;
 	private Integer mark;
 	private String evaluatorName;
+	
+	public String getMarkId() {
+		return markId;
+	}
+	public void setMarkId(String markId) {
+		this.markId = markId;
+	}
 	public String getEvaluatorName() {
 		return evaluatorName;
 	}

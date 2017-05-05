@@ -15,17 +15,28 @@ public class StudentService implements IStudentService {
     private IStudentDBOps dbOps;
 
 	@Override
-	public List<Student> getStudents() {
+	public List<Student> getStudentService() {
 		return dbOps.getStudentsFromDB();
 	}
-	
+
 	@Override
-	public boolean addStudent(Student student) {
-		return dbOps.addStudent(student.getStudentName(), student.getDateOfBirth());
+	public boolean addStudentService(Student studentDetails) {
+		return dbOps.addStudentInDB(studentDetails.getStudentName(),studentDetails.getDateOfBirth(), studentDetails.getStudentClass());
+	}
+
+	@Override
+	public Student getStudentDetailsService(Integer studentId) {
+		return dbOps.getStudentDetailsFromDB(studentId);
+	}
+
+	@Override
+	public boolean updateStudentByIDService(Integer markId, Student studentStudent) {
+		return dbOps.updateStudentInDB(markId, studentStudent);
+	}
+
+	@Override
+	public boolean deleteStudentByIDService(Integer markId) {
+		return dbOps.deleteStudentByIDFromDB(markId);
 	}
 	
-	@Override
-	public Student getStudentDetailsById(Integer studentId) {
-		return dbOps.getStudentDetailsById(studentId);
-	}
 }

@@ -7,9 +7,11 @@ import app.marks.dto.Marks;
 public interface IMarksDBOps {
 	public List<Marks> getMarksFromDB();
 	
-	public boolean updateMarksForStudent(String studentName, String subjectName, Integer marks);
+	public boolean updateMarksForStudentInDB(Integer markId, Marks marks);
 	
-	public boolean addMarksForStudent(String studentName, String subjectName, Integer marks, String evaluatorName);
+	public boolean addMarksForStudentInDB(String studentName, String subjectName, Integer marks, String evaluatorName);
 	
-	public List<Marks> getMarksForStudent(String studentName);
+	public List<Marks> getMarksForStudentFromDB(String studentName);
+
+	public boolean deleteMarksByIDFromDB(Integer markId);
 }

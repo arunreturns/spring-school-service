@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.marks.api.IMarksService;
 import app.marks.dto.Marks;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
+@Api(value="API for Handling Marks services")
 public class MarksController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private IMarksService marksService;
@@ -29,28 +31,34 @@ public class MarksController {
 	@ApiOperation(value = "View the marks of all the students", response = List.class)
 	public List<Marks> getMarks() {
 		logger.info("Inside getMarks");
-		return marksService.getMarks();
+		return marksService.getMarksService();
 	}
 
 	@RequestMapping(path="/marks/{studentName}", method = RequestMethod.GET)
 	@ApiOperation(value = "View the marks of a specific student", response = List.class)
 	public List<Marks> getMarksForStudent(@PathVariable String studentName) {
 		logger.info("Inside getMarksForStudent");
-		return marksService.getMarksForStudent(studentName);
+		return marksService.getMarksForStudentService(studentName);
 	}
 	
 	@RequestMapping(path="/mark", method = RequestMethod.POST)
 	@ApiOperation(value = "Enter the mark of a specific student", response = Boolean.class)
 	public boolean addMarksForStudent(@RequestBody Marks studentMarks) {
 		logger.info("Inside addMarksForStudent");
-		return marksService.addMarksForStudent(studentMarks);
+		return marksService.addMarksForStudentService(studentMarks);
 	}
 
-	
-	@RequestMapping(path="/update", method = RequestMethod.POST)
+	@RequestMapping(path="/mark/{markId}", method = RequestMethod.PUT)
 	@ApiOperation(value = "Update the marks for a specific student and subject combination", response = Boolean.class)
-	public boolean updateMarksForStudent(@RequestBody Marks studentMarks) {
+	public boolean updateMarksForStudent(@PathVariable Integer markId, @RequestBody Marks studentMarks) {
 		logger.info("Inside updateMarksForStudent");
-		return marksService.updateMarksForStudent(studentMarks);
+		return marksService.updateMarksForStudentService(markId, studentMarks);
+	}
+	
+	@RequestMapping(path="/mark/{markId}", method = RequestMethod.DELETE)
+	@ApiOperation(value = "Delete the marks based on ID", response = Boolean.class)
+	public boolean deleteMarksByID(@PathVariable Integer markId) {
+		logger.info("Inside deleteMarksByID");
+		return marksService.deleteMarksByIDService(markId);
 	}
 }

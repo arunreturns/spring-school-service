@@ -15,23 +15,28 @@ public class MarksService implements IMarksService {
     private IMarksDBOps dbOps;
 
 	@Override
-	public List<Marks> getMarks() {
+	public List<Marks> getMarksService() {
 		return dbOps.getMarksFromDB();
 	}
 
 	@Override
-	public boolean updateMarksForStudent(Marks studentMarks) {
-		return dbOps.updateMarksForStudent(studentMarks.getStudentName(), studentMarks.getSubjectName(), studentMarks.getMark());
+	public boolean addMarksForStudentService(Marks studentMarks) {
+		return dbOps.addMarksForStudentInDB(studentMarks.getStudentName(), studentMarks.getSubjectName(), studentMarks.getMark(), studentMarks.getEvaluatorName());
 	}
 
 	@Override
-	public boolean addMarksForStudent(Marks studentMarks) {
-		return dbOps.addMarksForStudent(studentMarks.getStudentName(), studentMarks.getSubjectName(), studentMarks.getMark(), studentMarks.getEvaluatorName());
+	public List<Marks> getMarksForStudentService(String studentName) {
+		return dbOps.getMarksForStudentFromDB(studentName);
 	}
 
 	@Override
-	public List<Marks> getMarksForStudent(String studentName) {
-		return dbOps.getMarksForStudent(studentName);
+	public boolean updateMarksForStudentService(Integer markId, Marks studentMarks) {
+		return dbOps.updateMarksForStudentInDB(markId, studentMarks);
+	}
+
+	@Override
+	public boolean deleteMarksByIDService(Integer markId) {
+		return dbOps.deleteMarksByIDFromDB(markId);
 	}
 	
 }

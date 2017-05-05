@@ -5,11 +5,13 @@ import java.util.List;
 import app.marks.dto.Marks;
 
 public interface IMarksService {
-	public List<Marks> getMarks();
+	public List<Marks> getMarksService();
 	
-	public boolean updateMarksForStudent(Marks studentMarks);
+	public boolean addMarksForStudentService(Marks studentMarks);
 	
-	public boolean addMarksForStudent(Marks studentMarks);
-	
-	public List<Marks> getMarksForStudent(String studentName);
+	public List<Marks> getMarksForStudentService(String studentName);
+
+	public boolean updateMarksForStudentService(Integer markId, Marks studentMarks);
+
+	public boolean deleteMarksByIDService(Integer markId);
 }

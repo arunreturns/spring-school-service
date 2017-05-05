@@ -5,8 +5,13 @@ import java.util.List;
 import app.student.dto.Student;
 
 public interface IStudentService {
-	public List<Student> getStudents();
-	public boolean addStudent(Student student);
+	public List<Student> getStudentService();
 	
-	public Student getStudentDetailsById(Integer studentId);
+	public boolean addStudentService(Student student);
+	
+	public Student getStudentDetailsService(Integer studentId);
+
+	public boolean updateStudentByIDService(Integer markId, Student studentStudent);
+
+	public boolean deleteStudentByIDService(Integer markId);
 }

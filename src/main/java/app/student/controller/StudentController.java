@@ -5,17 +5,19 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import app.student.api.IStudentService;
 import app.student.dto.Student;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
+@Api(value="API for Handling student services")
 public class StudentController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private IStudentService studentService;
@@ -26,23 +28,37 @@ public class StudentController {
 	}
 
 	@RequestMapping(path="/students", method = RequestMethod.GET)
-	@ApiOperation(value = "View a list of students", response = List.class)
-	public List<Student> getStudents() {
-		logger.info("Inside getStudents");
-		return studentService.getStudents();
+	@ApiOperation(value = "View the all the students", response = List.class)
+	public List<Student> getStudent() {
+		logger.info("Inside getStudent");
+		return studentService.getStudentService();
 	}
 
-	@RequestMapping(path="/students/{studentId}", method = RequestMethod.GET)
-	@ApiOperation(value = "View details for a specific student", response = List.class)
-	public Student getStudentDetailsById(@PathVariable Integer studentId) {
-		logger.info("Inside getStudents");
-		return studentService.getStudentDetailsById(studentId);
+	@RequestMapping(path="/student/{studentId}", method = RequestMethod.GET)
+	@ApiOperation(value = "View the details of a specific student", response = Student.class)
+	public Student getStudentDetails(@PathVariable Integer studentId) {
+		logger.info("Inside getStudentDetails");
+		return studentService.getStudentDetailsService(studentId);
 	}
 	
 	@RequestMapping(path="/student", method = RequestMethod.POST)
 	@ApiOperation(value = "Add a student", response = Boolean.class)
-	public boolean addStudent(@RequestBody Student student) {
+	public boolean addStudent(@RequestBody Student studentStudent) {
 		logger.info("Inside addStudent");
-		return studentService.addStudent(student);
+		return studentService.addStudentService(studentStudent);
+	}
+
+	@RequestMapping(path="/student/{studentId}", method = RequestMethod.PUT)
+	@ApiOperation(value = "Update the student details", response = Boolean.class)
+	public boolean updateStudent(@PathVariable Integer studentId, @RequestBody Student studentStudent) {
+		logger.info("Inside updateStudent");
+		return studentService.updateStudentByIDService(studentId, studentStudent);
+	}
+	
+	@RequestMapping(path="/student/{studentId}", method = RequestMethod.DELETE)
+	@ApiOperation(value = "Delete the student based on ID", response = Boolean.class)
+	public boolean deleteStudentByID(@PathVariable Integer studentId) {
+		logger.info("Inside deleteStudentByID");
+		return studentService.deleteStudentByIDService(studentId);
 	}
 }

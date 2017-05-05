@@ -15,12 +15,28 @@ public class TeacherService implements ITeacherService {
     private ITeacherDBOps dbOps;
 
 	@Override
-	public List<Teacher> getTeachers() {
+	public List<Teacher> getTeacherService() {
 		return dbOps.getTeachersFromDB();
 	}
-	
+
 	@Override
-	public boolean addTeacher(Teacher teacher) {
-		return dbOps.addTeacher(teacher.getTeacherName(), teacher.getDateOfBirth(), String.join(",",teacher.getTeacherSubjects()));
+	public boolean addTeacherService(Teacher teacherDetails) {
+		return dbOps.addTeacherInDB(teacherDetails.getTeacherName(),teacherDetails.getDateOfBirth(), teacherDetails.getTeacherSubject(), teacherDetails.getYearsOfExperience());
 	}
+
+	@Override
+	public Teacher getTeacherDetailsService(Integer teacherId) {
+		return dbOps.getTeacherDetailsFromDB(teacherId);
+	}
+
+	@Override
+	public boolean updateTeacherByIDService(Integer markId, Teacher studentTeacher) {
+		return dbOps.updateTeacherInDB(markId, studentTeacher);
+	}
+
+	@Override
+	public boolean deleteTeacherByIDService(Integer markId) {
+		return dbOps.deleteTeacherByIDFromDB(markId);
+	}
+	
 }
