@@ -12,7 +12,7 @@ public interface IStudentDBOps {
 	
 	public boolean updateStudentInDB(Integer studentId, Student student);
 	
-	public boolean addStudentInDB(String studentName, Date dateOfBirth, String studentClass);
+	public boolean addStudentInDB(String studentName, Date dateOfBirth, String studentEmail, String parentEmail);
 	
 	public Student getStudentDetailsFromDB(Integer studentId);
 

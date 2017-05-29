@@ -30,8 +30,8 @@ public class ClassesService implements IClassesService {
 	}
 
 	@Override
-	public boolean updateClassesByIDService(Integer markId, Classes classesClasses) {
-		return dbOps.updateClassesInDB(markId, classesClasses);
+	public boolean updateClassesByIDService(Integer classId, Classes classesClasses) {
+		return dbOps.updateClassesInDB(classId, classesClasses);
 	}
 
 	@Override

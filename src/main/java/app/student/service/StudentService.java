@@ -21,7 +21,7 @@ public class StudentService implements IStudentService {
 
 	@Override
 	public boolean addStudentService(Student studentDetails) {
-		return dbOps.addStudentInDB(studentDetails.getStudentName(),studentDetails.getDateOfBirth(), studentDetails.getStudentClass());
+		return dbOps.addStudentInDB(studentDetails.getStudentName(),studentDetails.getDateOfBirth(), studentDetails.getStudentEmail(), studentDetails.getParentEmail());
 	}
 
 	@Override

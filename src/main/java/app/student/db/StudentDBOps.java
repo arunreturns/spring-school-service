@@ -48,13 +48,14 @@ public class StudentDBOps implements IStudentDBOps {
 		return false;
 	}
 	@Override
-	public boolean addStudentInDB(String studentName, Date dateOfBirth, String studentClass) {
-		String query = "INSERT INTO STUDENTS(studentName, dateOfBirth, studentClass) " + 
-					   "VALUES (:studentName, :dateOfBirth, :studentClass)";
+	public boolean addStudentInDB(String studentName, Date dateOfBirth, String studentEmail, String parentEmail) {
+		String query = "INSERT INTO STUDENTS(studentName, dateOfBirth, studentEmail, parentEmail) " + 
+					   "VALUES (:studentName, :dateOfBirth, :studentEmail, :parentEmail)";
 
         MapSqlParameterSource param = new MapSqlParameterSource()
                 .addValue("studentName", studentName)
-                .addValue("studentClass", studentClass)
+                .addValue("studentEmail", studentEmail)
+                .addValue("parentEmail", parentEmail)
                 .addValue("dateOfBirth", dateOfBirth);
 
         int updateCount = namedParameterJdbcTemplate.update(query, param);

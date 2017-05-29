@@ -5,8 +5,10 @@ import java.util.Date;
 public class Student {
 	private Integer studentId;
 	private String studentName;
-	private String studentClass;
 	private Date dateOfBirth;
+	private String studentEmail;
+	private String parentEmail;
+	
 	public Integer getStudentId() {
 		return studentId;
 	}
@@ -25,10 +27,17 @@ public class Student {
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	public String getStudentClass() {
-		return studentClass;
+	public String getStudentEmail() {
+		return studentEmail;
 	}
-	public void setStudentClass(String studentClass) {
-		this.studentClass = studentClass;
+	public void setStudentEmail(String studentEmail) {
+		this.studentEmail = studentEmail;
 	}
+	public String getParentEmail() {
+		return parentEmail;
+	}
+	public void setParentEmail(String parentEmail) {
+		this.parentEmail = parentEmail;
+	}
+	
 }
