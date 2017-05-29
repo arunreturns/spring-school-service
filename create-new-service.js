@@ -1,4 +1,4 @@
-var NEW_SERVICE = "Teacher"
+var NEW_SERVICE = "Classes"
 
 var MAIN_PATH = "./src/main/java/app/";
 var COPY_SERVICE = "Student"
