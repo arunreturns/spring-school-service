@@ -30,37 +30,37 @@ public class ClassesController {
 	}
 
 	@RequestMapping(path="/classes", method = RequestMethod.GET)
-	@ApiOperation(value = "View the all the classess", response = List.class)
+	@ApiOperation(value = "View the all the classes", response = List.class)
 	public List<Classes> getClasses() {
 		logger.info("Inside getClasses");
 		return classesService.getClassesService();
 	}
 
-	@RequestMapping(path="/classes/{classesId}", method = RequestMethod.GET)
+	@RequestMapping(path="/classes/{classId}", method = RequestMethod.GET)
 	@ApiOperation(value = "View the details of a specific class", response = Classes.class)
-	public Classes getClassesDetails(@PathVariable Integer classesId) {
+	public Classes getClassesDetails(@PathVariable Integer classId) {
 		logger.info("Inside getClassesDetails");
-		return classesService.getClassesDetailsService(classesId);
+		return classesService.getClassesDetailsService(classId);
 	}
 	
 	@RequestMapping(path="/classes", method = RequestMethod.POST)
 	@ApiOperation(value = "Add a Class", response = Boolean.class)
-	public boolean addClasses(@RequestBody Classes classesClasses) {
+	public boolean addClasses(@RequestBody Classes classDetails) {
 		logger.info("Inside addClasses");
-		return classesService.addClassesService(classesClasses);
+		return classesService.addClassesService(classDetails);
 	}
 
-	@RequestMapping(path="/classes/{classesId}", method = RequestMethod.PUT)
+	@RequestMapping(path="/classes/{classId}", method = RequestMethod.PUT)
 	@ApiOperation(value = "Update a class details", response = Boolean.class)
-	public boolean updateClasses(@PathVariable Integer classesId, @RequestBody Classes classesClasses) {
+	public boolean updateClasses(@PathVariable Integer classId, @RequestBody Classes classDetails) {
 		logger.info("Inside updateClasses");
-		return classesService.updateClassesByIDService(classesId, classesClasses);
+		return classesService.updateClassesByIDService(classId, classDetails);
 	}
 	
-	@RequestMapping(path="/classes/{classesId}", method = RequestMethod.DELETE)
+	@RequestMapping(path="/classes/{classId}", method = RequestMethod.DELETE)
 	@ApiOperation(value = "Delete the class based on ID", response = Boolean.class)
-	public boolean deleteClassesByID(@PathVariable Integer classesId) {
+	public boolean deleteClassesByID(@PathVariable Integer classId) {
 		logger.info("Inside deleteClassesByID");
-		return classesService.deleteClassesByIDService(classesId);
+		return classesService.deleteClassesByIDService(classId);
 	}
 }

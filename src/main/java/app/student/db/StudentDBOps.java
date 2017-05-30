@@ -44,8 +44,20 @@ public class StudentDBOps implements IStudentDBOps {
 	
 	@Override
 	public boolean updateStudentInDB(Integer studentId, Student student) {
-		// TODO Auto-generated method stub
-		return false;
+		String query = "UPDATE STUDENTS SET studentName = :studentName, dateOfBirth = :dateOfBirth, "
+				+ "studentEmail = :studentEmail, parentEmail = :parentEmail "
+				+ "WHERE studentId = :studentId";
+
+		MapSqlParameterSource param = new MapSqlParameterSource()
+				.addValue("studentName", student.getStudentName())
+                .addValue("studentEmail", student.getStudentEmail())
+                .addValue("parentEmail", student.getParentEmail())
+                .addValue("dateOfBirth", student.getDateOfBirth())
+                .addValue("studentId", studentId);
+
+		int updateCount = namedParameterJdbcTemplate.update(query, param);
+
+		return updateCount > 0;
 	}
 	@Override
 	public boolean addStudentInDB(String studentName, Date dateOfBirth, String studentEmail, String parentEmail) {

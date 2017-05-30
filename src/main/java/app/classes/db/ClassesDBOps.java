@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import app.classes.api.IClassesDBOps;
 import app.classes.dto.Classes;
-import app.teacher.api.ITeacherDBOps;
 
 @Service
 public class ClassesDBOps implements IClassesDBOps {
@@ -19,7 +18,6 @@ public class ClassesDBOps implements IClassesDBOps {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-	private ITeacherDBOps teacherDBOps;
 	
 	@Override
 	public List<Classes> getClassesFromDB() {
@@ -45,15 +43,22 @@ public class ClassesDBOps implements IClassesDBOps {
 	
 	@Override
 	public boolean updateClassesInDB(Integer classId, Classes classes) {
-		// TODO Auto-generated method stub
-		return false;
+		String query = "UPDATE CLASSES SET className = :className, teacherInCharge = :teacherInCharge, "
+				+ "studentsInClass = :studentsInClass "
+				+ "WHERE classId = :classId";
+
+		MapSqlParameterSource param = new MapSqlParameterSource()
+				.addValue("className", classes.getClassName())
+				.addValue("teacherInCharge", classes.getTeacherInCharge())
+				.addValue("studentsInClass", classes.getStudentsInClass())
+				.addValue("classId", classId);
+
+		int updateCount = namedParameterJdbcTemplate.update(query, param);
+
+		return updateCount > 0;
 	}
 	@Override
 	public boolean addClassesInDB(String className, String teacherInCharge, Integer studentsInClass) {
-		if ( teacherDBOps.getTeachersByNameFromDB(teacherInCharge).size() <= 0 ){
-			logger.info("The Teacher is not added");
-			return false;
-		}
 		
 		String query = "INSERT INTO CLASSES(className, teacherInCharge, studentsInClass) " + 
 					   "VALUES (:className, :teacherInCharge, :studentsInClass)";
