@@ -23,74 +23,66 @@ public class TeacherDBOps implements ITeacherDBOps {
 	@Override
 	public List<Teacher> getTeachersFromDB() {
 		String query = "SELECT * FROM TEACHERS";
+		logger.info("Running query " + query);
 		List<Teacher> teachers = namedParameterJdbcTemplate.query(query, new TeacherRowMapper());
 
 		logger.info("Teachers " + teachers);
+		
 		return teachers;
 	}
-
+	
 	@Override
-	public List<Teacher> getTeachersByNameFromDB(String teacherName) {
-		String query = "SELECT * FROM TEACHERS WHERE teacherName = :teacherName";
+	public boolean addTeacherInDB(Teacher teacher) {
+		
+        String query = "INSERT INTO TEACHERS(teacherId, teacherName, yearsOfExperience, dateOfBirth, joiningDate) "
+    				 + "VALUES (:teacherId, :teacherName, :yearsOfExperience, :dateOfBirth, :joiningDate)";
+        logger.info("Running query " + query);
+        
+    	MapSqlParameterSource param = new MapSqlParameterSource()
+    	             .addValue("teacherId", teacher.getTeacherId()).addValue("teacherName", teacher.getTeacherName()).addValue("yearsOfExperience", teacher.getYearsOfExperience()).addValue("dateOfBirth", teacher.getDateOfBirth()).addValue("joiningDate", teacher.getJoiningDate());
 
-		MapSqlParameterSource param = new MapSqlParameterSource().addValue("teacherName", teacherName);
 
-		List<Teacher> teachers = namedParameterJdbcTemplate.query(query, param, new TeacherRowMapper());
-
-		logger.info("Teachers " + teachers);
-		return teachers;
-	}
-
-	@Override
-	public boolean updateTeacherInDB(Integer teacherId, Teacher teacher) {
-		String query = "UPDATE TEACHERS SET teacherName = :teacherName, dateOfBirth = :dateOfBirth, "
-				+ "teacherSubject = :teacherSubject, yearsOfExperience = :yearsOfExperience "
-				+ "WHERE teacherId = :teacherId";
-
-		MapSqlParameterSource param = new MapSqlParameterSource().addValue("teacherName", teacher.getTeacherName())
-				.addValue("teacherSubject", teacher.getTeacherSubject())
-				.addValue("yearsOfExperience", teacher.getYearsOfExperience())
-				.addValue("dateOfBirth", teacher.getDateOfBirth())
-				.addValue("teacherId", teacherId);
-
-		int updateCount = namedParameterJdbcTemplate.update(query, param);
-
-		return updateCount > 0;
-	}
-
-	@Override
-	public boolean addTeacherInDB(String teacherName, Date dateOfBirth, String teacherSubject,
-			Integer yearsOfExperience) {
-		String query = "INSERT INTO TEACHERS(teacherName, dateOfBirth, teacherSubject, yearsOfExperience) "
-				+ "VALUES (:teacherName, :dateOfBirth, :teacherSubject, :yearsOfExperience)";
-
-		MapSqlParameterSource param = new MapSqlParameterSource().addValue("teacherName", teacherName)
-				.addValue("teacherSubject", teacherSubject).addValue("yearsOfExperience", yearsOfExperience)
-				.addValue("dateOfBirth", dateOfBirth);
-
-		int updateCount = namedParameterJdbcTemplate.update(query, param);
-
-		return updateCount > 0;
+		int insertCount = namedParameterJdbcTemplate.update(query, param);
+		
+		logger.info("No of rows inserted: " + insertCount);
+		return insertCount > 0;
 	}
 
 	@Override
 	public Teacher getTeacherDetailsFromDB(Integer teacherId) {
 		String query = "SELECT * FROM TEACHERS WHERE teacherId = :teacherId";
-
+		logger.info("Running query " + query);
 		MapSqlParameterSource param = new MapSqlParameterSource().addValue("teacherId", teacherId);
 
 		Teacher teacher = namedParameterJdbcTemplate.queryForObject(query, param, new TeacherRowMapper());
+		logger.info("Teacher Object obtained: " + teacher.toString());
 		return teacher;
+	}
+
+	@Override
+	public boolean updateTeacherInDB(Integer teacherId, Teacher teacher) {
+		
+        String query = "UPDATE TEACHERS teacherId = :teacherId, teacherName = :teacherName, yearsOfExperience = :yearsOfExperience, dateOfBirth = :dateOfBirth, joiningDate = :joiningDate "
+				     + "WHERE teacherId = :teacherId";
+		logger.info("Running query " + query);
+		MapSqlParameterSource param = new MapSqlParameterSource()
+				     .addValue("teacherId", teacher.getTeacherId()).addValue("teacherName", teacher.getTeacherName()).addValue("yearsOfExperience", teacher.getYearsOfExperience()).addValue("dateOfBirth", teacher.getDateOfBirth()).addValue("joiningDate", teacher.getJoiningDate());
+
+
+		int updateCount = namedParameterJdbcTemplate.update(query, param);
+		logger.info("No of rows updated: " + updateCount);
+		return updateCount > 0;
 	}
 
 	@Override
 	public boolean deleteTeacherByIDFromDB(Integer teacherId) {
 		String query = "DELETE FROM TEACHERS WHERE teacherId = :teacherId";
-
+		logger.info("Running query " + query);
 		MapSqlParameterSource param = new MapSqlParameterSource().addValue("teacherId", teacherId);
 
 		Integer deletedCount = namedParameterJdbcTemplate.update(query, param);
 
+		logger.info("No of rows deleted: " + deletedCount);
 		return deletedCount > 0;
 	}
 

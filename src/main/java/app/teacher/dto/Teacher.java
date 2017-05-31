@@ -3,41 +3,54 @@ package app.teacher.dto;
 import java.util.Date;
 
 public class Teacher {
+    
 	private Integer teacherId;
 	private String teacherName;
-	private String teacherSubject;
+	private String yearsOfExperience;
 	private Date dateOfBirth;
-	private Integer yearsOfExperience;
-	public Integer getTeacherId() {
+	private Date joiningDate;
+
+    
+
+    public Integer getTeacherId() {
 		return teacherId;
 	}
 	public void setTeacherId(Integer teacherId) {
 		this.teacherId = teacherId;
 	}
-	public String getTeacherName() {
+
+    public String getTeacherName() {
 		return teacherName;
 	}
 	public void setTeacherName(String teacherName) {
 		this.teacherName = teacherName;
 	}
-	public String getTeacherSubject() {
-		return teacherSubject;
+
+    public String getYearsOfExperience() {
+		return yearsOfExperience;
 	}
-	public void setTeacherSubject(String teacherSubject) {
-		this.teacherSubject = teacherSubject;
+	public void setYearsOfExperience(String yearsOfExperience) {
+		this.yearsOfExperience = yearsOfExperience;
 	}
-	public Date getDateOfBirth() {
+
+    public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	public Integer getYearsOfExperience() {
-		return yearsOfExperience;
+
+    public Date getJoiningDate() {
+		return joiningDate;
 	}
-	public void setYearsOfExperience(Integer yearsOfExperience) {
-		this.yearsOfExperience = yearsOfExperience;
+	public void setJoiningDate(Date joiningDate) {
+		this.joiningDate = joiningDate;
 	}
 
-	
+    
+    @Override
+	public String toString(){
+		return "Teacher: Teacher Id: " + teacherId + "," + "Teacher Name: " + teacherName + "," + "Years Of Experience: " + yearsOfExperience + "," + "Date Of Birth: " + dateOfBirth + "," + "Joining Date: " + joiningDate;
+	}
+
 }

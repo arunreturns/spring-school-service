@@ -12,12 +12,19 @@ public class TeacherRowMapper implements RowMapper<Teacher>{
 	@Override
 	public Teacher mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Teacher teacher = new Teacher();
+		
 
-		teacher.setTeacherId(rs.getInt("teacherId"));
-		teacher.setTeacherName(rs.getString("teacherName"));
-		teacher.setDateOfBirth(rs.getDate("dateOfBirth"));
-		teacher.setYearsOfExperience(rs.getInt("yearsOfExperience"));
-		teacher.setTeacherSubject(rs.getString("teacherSubject"));
+    teacher.setTeacherId(rs.getInt("teacherId"));
+
+    teacher.setTeacherName(rs.getString("teacherName"));
+
+    teacher.setYearsOfExperience(rs.getString("yearsOfExperience"));
+
+    teacher.setDateOfBirth(rs.getDate("dateOfBirth"));
+
+    teacher.setJoiningDate(rs.getDate("joiningDate"));
+
+		
 		return teacher;
 	}
 

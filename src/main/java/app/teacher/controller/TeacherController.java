@@ -30,10 +30,16 @@ public class TeacherController {
 	}
 
 	@RequestMapping(path="/teachers", method = RequestMethod.GET)
-	@ApiOperation(value = "View the all the teachers", response = List.class)
+	@ApiOperation(value = "View all the teachers", response = List.class)
 	public List<Teacher> getTeacher() {
 		logger.info("Inside getTeacher");
 		return teacherService.getTeacherService();
+	}
+	@RequestMapping(path="/teacher", method = RequestMethod.POST)
+	@ApiOperation(value = "Add a teacher", response = Boolean.class)
+	public boolean addTeacher(@RequestBody Teacher teacher) {
+		logger.info("Inside addTeacher");
+		return teacherService.addTeacherService(teacher);
 	}
 
 	@RequestMapping(path="/teacher/{teacherId}", method = RequestMethod.GET)
@@ -42,19 +48,12 @@ public class TeacherController {
 		logger.info("Inside getTeacherDetails");
 		return teacherService.getTeacherDetailsService(teacherId);
 	}
-	
-	@RequestMapping(path="/teacher", method = RequestMethod.POST)
-	@ApiOperation(value = "Add a teacher", response = Boolean.class)
-	public boolean addTeacher(@RequestBody Teacher studentTeacher) {
-		logger.info("Inside addTeacher");
-		return teacherService.addTeacherService(studentTeacher);
-	}
 
 	@RequestMapping(path="/teacher/{teacherId}", method = RequestMethod.PUT)
-	@ApiOperation(value = "Update the teacher details", response = Boolean.class)
-	public boolean updateTeacher(@PathVariable Integer teacherId, @RequestBody Teacher studentTeacher) {
+	@ApiOperation(value = "Update a single teacher details", response = Boolean.class)
+	public boolean updateTeacher(@PathVariable Integer teacherId, @RequestBody Teacher teacher) {
 		logger.info("Inside updateTeacher");
-		return teacherService.updateTeacherByIDService(teacherId, studentTeacher);
+		return teacherService.updateTeacherByIDService(teacherId, teacher);
 	}
 	
 	@RequestMapping(path="/teacher/{teacherId}", method = RequestMethod.DELETE)

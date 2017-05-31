@@ -19,82 +19,71 @@ public class StudentDBOps implements IStudentDBOps {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-	
+
 	@Override
 	public List<Student> getStudentsFromDB() {
 		String query = "SELECT * FROM STUDENTS";
+		logger.info("Running query " + query);
 		List<Student> students = namedParameterJdbcTemplate.query(query, new StudentRowMapper());
 
 		logger.info("Students " + students);
+		
 		return students;
 	}
 	
 	@Override
-	public List<Student> getStudentsByNameFromDB(String studentName) {
-		String query = "SELECT * FROM STUDENTS WHERE studentName = :studentName";
+	public boolean addStudentInDB(Student student) {
 		
-		MapSqlParameterSource param = new MapSqlParameterSource()
-                .addValue("studentName", studentName);
+        String query = "INSERT INTO STUDENTS(studentId, studentName, studentClass, studentEmail, parentEmail, dateOfBirth) "
+    				 + "VALUES (:studentId, :studentName, :studentClass, :studentEmail, :parentEmail, :dateOfBirth)";
+        logger.info("Running query " + query);
+        
+    	MapSqlParameterSource param = new MapSqlParameterSource()
+    	             .addValue("studentId", student.getStudentId()).addValue("studentName", student.getStudentName()).addValue("studentClass", student.getStudentClass()).addValue("studentEmail", student.getStudentEmail()).addValue("parentEmail", student.getParentEmail()).addValue("dateOfBirth", student.getDateOfBirth());
+
+
+		int insertCount = namedParameterJdbcTemplate.update(query, param);
 		
-		List<Student> students = namedParameterJdbcTemplate.query(query, param, new StudentRowMapper());
-
-		logger.info("Students " + students);
-		return students;
+		logger.info("No of rows inserted: " + insertCount);
+		return insertCount > 0;
 	}
-	
-	@Override
-	public boolean updateStudentInDB(Integer studentId, Student student) {
-		String query = "UPDATE STUDENTS SET studentName = :studentName, dateOfBirth = :dateOfBirth, "
-				+ "studentEmail = :studentEmail, parentEmail = :parentEmail "
-				+ "WHERE studentId = :studentId";
 
-		MapSqlParameterSource param = new MapSqlParameterSource()
-				.addValue("studentName", student.getStudentName())
-                .addValue("studentEmail", student.getStudentEmail())
-                .addValue("parentEmail", student.getParentEmail())
-                .addValue("dateOfBirth", student.getDateOfBirth())
-                .addValue("studentId", studentId);
-
-		int updateCount = namedParameterJdbcTemplate.update(query, param);
-
-		return updateCount > 0;
-	}
-	@Override
-	public boolean addStudentInDB(String studentName, Date dateOfBirth, String studentEmail, String parentEmail) {
-		String query = "INSERT INTO STUDENTS(studentName, dateOfBirth, studentEmail, parentEmail) " + 
-					   "VALUES (:studentName, :dateOfBirth, :studentEmail, :parentEmail)";
-
-        MapSqlParameterSource param = new MapSqlParameterSource()
-                .addValue("studentName", studentName)
-                .addValue("studentEmail", studentEmail)
-                .addValue("parentEmail", parentEmail)
-                .addValue("dateOfBirth", dateOfBirth);
-
-        int updateCount = namedParameterJdbcTemplate.update(query, param);
-
-        return updateCount > 0;
-	}
 	@Override
 	public Student getStudentDetailsFromDB(Integer studentId) {
 		String query = "SELECT * FROM STUDENTS WHERE studentId = :studentId";
-		
-		MapSqlParameterSource param = new MapSqlParameterSource()
-                .addValue("studentId", studentId);
-		
+		logger.info("Running query " + query);
+		MapSqlParameterSource param = new MapSqlParameterSource().addValue("studentId", studentId);
+
 		Student student = namedParameterJdbcTemplate.queryForObject(query, param, new StudentRowMapper());
+		logger.info("Student Object obtained: " + student.toString());
 		return student;
 	}
+
+	@Override
+	public boolean updateStudentInDB(Integer studentId, Student student) {
+		
+        String query = "UPDATE STUDENTS studentId = :studentId, studentName = :studentName, studentClass = :studentClass, studentEmail = :studentEmail, parentEmail = :parentEmail, dateOfBirth = :dateOfBirth "
+				     + "WHERE studentId = :studentId";
+		logger.info("Running query " + query);
+		MapSqlParameterSource param = new MapSqlParameterSource()
+				     .addValue("studentId", student.getStudentId()).addValue("studentName", student.getStudentName()).addValue("studentClass", student.getStudentClass()).addValue("studentEmail", student.getStudentEmail()).addValue("parentEmail", student.getParentEmail()).addValue("dateOfBirth", student.getDateOfBirth());
+
+
+		int updateCount = namedParameterJdbcTemplate.update(query, param);
+		logger.info("No of rows updated: " + updateCount);
+		return updateCount > 0;
+	}
+
 	@Override
 	public boolean deleteStudentByIDFromDB(Integer studentId) {
 		String query = "DELETE FROM STUDENTS WHERE studentId = :studentId";
-		
-		MapSqlParameterSource param = new MapSqlParameterSource()
-                .addValue("studentId", studentId);
-		
+		logger.info("Running query " + query);
+		MapSqlParameterSource param = new MapSqlParameterSource().addValue("studentId", studentId);
+
 		Integer deletedCount = namedParameterJdbcTemplate.update(query, param);
 
+		logger.info("No of rows deleted: " + deletedCount);
 		return deletedCount > 0;
 	}
 
 }
-

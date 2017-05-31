@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin
 @RestController
-@Api(value="API for Handling student services")
+@Api(value="API for Handling Student services")
 public class StudentController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private IStudentService studentService;
@@ -30,10 +30,16 @@ public class StudentController {
 	}
 
 	@RequestMapping(path="/students", method = RequestMethod.GET)
-	@ApiOperation(value = "View the all the students", response = List.class)
+	@ApiOperation(value = "View all the students", response = List.class)
 	public List<Student> getStudent() {
 		logger.info("Inside getStudent");
 		return studentService.getStudentService();
+	}
+	@RequestMapping(path="/student", method = RequestMethod.POST)
+	@ApiOperation(value = "Add a student", response = Boolean.class)
+	public boolean addStudent(@RequestBody Student student) {
+		logger.info("Inside addStudent");
+		return studentService.addStudentService(student);
 	}
 
 	@RequestMapping(path="/student/{studentId}", method = RequestMethod.GET)
@@ -42,19 +48,12 @@ public class StudentController {
 		logger.info("Inside getStudentDetails");
 		return studentService.getStudentDetailsService(studentId);
 	}
-	
-	@RequestMapping(path="/student", method = RequestMethod.POST)
-	@ApiOperation(value = "Add a student", response = Boolean.class)
-	public boolean addStudent(@RequestBody Student studentStudent) {
-		logger.info("Inside addStudent");
-		return studentService.addStudentService(studentStudent);
-	}
 
 	@RequestMapping(path="/student/{studentId}", method = RequestMethod.PUT)
-	@ApiOperation(value = "Update the student details", response = Boolean.class)
-	public boolean updateStudent(@PathVariable Integer studentId, @RequestBody Student studentStudent) {
+	@ApiOperation(value = "Update a single student details", response = Boolean.class)
+	public boolean updateStudent(@PathVariable Integer studentId, @RequestBody Student student) {
 		logger.info("Inside updateStudent");
-		return studentService.updateStudentByIDService(studentId, studentStudent);
+		return studentService.updateStudentByIDService(studentId, student);
 	}
 	
 	@RequestMapping(path="/student/{studentId}", method = RequestMethod.DELETE)
