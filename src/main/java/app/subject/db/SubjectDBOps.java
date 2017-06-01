@@ -34,12 +34,12 @@ public class SubjectDBOps implements ISubjectDBOps {
 	@Override
 	public boolean addSubjectInDB(Subject subject) {
 		
-        String query = "INSERT INTO SUBJECT(subjectId, subjectName) "
-    				 + "VALUES (:subjectId, :subjectName)";
+        String query = "INSERT INTO SUBJECT(subjectName) "
+    				 + "VALUES (:subjectName)";
         logger.info("Running query " + query);
         
     	MapSqlParameterSource param = new MapSqlParameterSource()
-    	             .addValue("subjectId", subject.getSubjectId()).addValue("subjectName", subject.getSubjectName());
+    	             .addValue("subjectName", subject.getSubjectName());
 
 
 		int insertCount = namedParameterJdbcTemplate.update(query, param);
@@ -62,7 +62,7 @@ public class SubjectDBOps implements ISubjectDBOps {
 	@Override
 	public boolean updateSubjectInDB(Integer subjectId, Subject subject) {
 		
-        String query = "UPDATE SUBJECT subjectId = :subjectId, subjectName = :subjectName "
+        String query = "UPDATE SUBJECT subjectName = :subjectName "
 				     + "WHERE subjectId = :subjectId";
 		logger.info("Running query " + query);
 		MapSqlParameterSource param = new MapSqlParameterSource()

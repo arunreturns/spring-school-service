@@ -34,12 +34,12 @@ public class TeacherDBOps implements ITeacherDBOps {
 	@Override
 	public boolean addTeacherInDB(Teacher teacher) {
 		
-        String query = "INSERT INTO TEACHERS(teacherId, teacherName, yearsOfExperience, dateOfBirth, joiningDate) "
-    				 + "VALUES (:teacherId, :teacherName, :yearsOfExperience, :dateOfBirth, :joiningDate)";
+        String query = "INSERT INTO TEACHERS(teacherName, yearsOfExperience, dateOfBirth, joiningDate) "
+    				 + "VALUES (:teacherName, :yearsOfExperience, :dateOfBirth, :joiningDate)";
         logger.info("Running query " + query);
         
     	MapSqlParameterSource param = new MapSqlParameterSource()
-    	             .addValue("teacherId", teacher.getTeacherId()).addValue("teacherName", teacher.getTeacherName()).addValue("yearsOfExperience", teacher.getYearsOfExperience()).addValue("dateOfBirth", teacher.getDateOfBirth()).addValue("joiningDate", teacher.getJoiningDate());
+    	             .addValue("teacherName", teacher.getTeacherName()).addValue("yearsOfExperience", teacher.getYearsOfExperience()).addValue("dateOfBirth", teacher.getDateOfBirth()).addValue("joiningDate", teacher.getJoiningDate());
 
 
 		int insertCount = namedParameterJdbcTemplate.update(query, param);
@@ -62,7 +62,7 @@ public class TeacherDBOps implements ITeacherDBOps {
 	@Override
 	public boolean updateTeacherInDB(Integer teacherId, Teacher teacher) {
 		
-        String query = "UPDATE TEACHERS teacherId = :teacherId, teacherName = :teacherName, yearsOfExperience = :yearsOfExperience, dateOfBirth = :dateOfBirth, joiningDate = :joiningDate "
+        String query = "UPDATE TEACHERS teacherName = :teacherName, yearsOfExperience = :yearsOfExperience, dateOfBirth = :dateOfBirth, joiningDate = :joiningDate "
 				     + "WHERE teacherId = :teacherId";
 		logger.info("Running query " + query);
 		MapSqlParameterSource param = new MapSqlParameterSource()

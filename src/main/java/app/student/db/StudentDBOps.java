@@ -34,12 +34,12 @@ public class StudentDBOps implements IStudentDBOps {
 	@Override
 	public boolean addStudentInDB(Student student) {
 		
-        String query = "INSERT INTO STUDENTS(studentId, studentName, studentClass, studentEmail, parentEmail, dateOfBirth) "
-    				 + "VALUES (:studentId, :studentName, :studentClass, :studentEmail, :parentEmail, :dateOfBirth)";
+        String query = "INSERT INTO STUDENTS(studentName, studentClass, studentEmail, parentEmail, dateOfBirth) "
+    				 + "VALUES (:studentName, :studentClass, :studentEmail, :parentEmail, :dateOfBirth)";
         logger.info("Running query " + query);
         
     	MapSqlParameterSource param = new MapSqlParameterSource()
-    	             .addValue("studentId", student.getStudentId()).addValue("studentName", student.getStudentName()).addValue("studentClass", student.getStudentClass()).addValue("studentEmail", student.getStudentEmail()).addValue("parentEmail", student.getParentEmail()).addValue("dateOfBirth", student.getDateOfBirth());
+    	             .addValue("studentName", student.getStudentName()).addValue("studentClass", student.getStudentClass()).addValue("studentEmail", student.getStudentEmail()).addValue("parentEmail", student.getParentEmail()).addValue("dateOfBirth", student.getDateOfBirth());
 
 
 		int insertCount = namedParameterJdbcTemplate.update(query, param);
@@ -62,7 +62,7 @@ public class StudentDBOps implements IStudentDBOps {
 	@Override
 	public boolean updateStudentInDB(Integer studentId, Student student) {
 		
-        String query = "UPDATE STUDENTS studentId = :studentId, studentName = :studentName, studentClass = :studentClass, studentEmail = :studentEmail, parentEmail = :parentEmail, dateOfBirth = :dateOfBirth "
+        String query = "UPDATE STUDENTS studentName = :studentName, studentClass = :studentClass, studentEmail = :studentEmail, parentEmail = :parentEmail, dateOfBirth = :dateOfBirth "
 				     + "WHERE studentId = :studentId";
 		logger.info("Running query " + query);
 		MapSqlParameterSource param = new MapSqlParameterSource()

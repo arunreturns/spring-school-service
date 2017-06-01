@@ -18,7 +18,7 @@ public class TeacherRowMapper implements RowMapper<Teacher>{
 
     teacher.setTeacherName(rs.getString("teacherName"));
 
-    teacher.setYearsOfExperience(rs.getString("yearsOfExperience"));
+    teacher.setYearsOfExperience(rs.getInt("yearsOfExperience"));
 
     teacher.setDateOfBirth(rs.getDate("dateOfBirth"));
 

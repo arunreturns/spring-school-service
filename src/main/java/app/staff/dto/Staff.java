@@ -9,6 +9,8 @@ public class Staff {
 	private Date dateOfBirth;
 	private String staffRole;
 
+    
+
     public Integer getStaffId() {
 		return staffId;
 	}
@@ -36,6 +38,7 @@ public class Staff {
 	public void setStaffRole(String staffRole) {
 		this.staffRole = staffRole;
 	}
+
     
     @Override
 	public String toString(){

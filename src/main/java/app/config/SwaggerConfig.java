@@ -28,9 +28,11 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
     	ApiInfoBuilder apiInfoBuilder = new ApiInfoBuilder();
     	apiInfoBuilder.termsOfServiceUrl("Terms of Service URL");
-    	Contact contact = new Contact( "Arun K", "http://school-service.herokuapp.com", "arunreturns@gmail.com");
+    	Contact contact = new Contact("Arun K", "http://school-service.herokuapp.com", "arunreturns@gmail.com");
     	apiInfoBuilder.contact(contact);
-    	apiInfoBuilder.description("API For School Services");
+    	apiInfoBuilder.title("School Services API");
+    	apiInfoBuilder.description("API For School Services" + 
+    							   "Source code available on https://github.com/arunreturns/spring-school-service");
     	apiInfoBuilder.version("0.0.1");
         return apiInfoBuilder.build();
     }

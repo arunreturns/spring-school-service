@@ -1,5 +1,6 @@
 package app.staff.db;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -22,7 +23,7 @@ public class StaffDBOps implements IStaffDBOps {
 	@Override
 	public List<Staff> getStaffsFromDB() {
 		String query = "SELECT * FROM STAFF";
-		logger.info("Running query " + query + " inside getStaffsFromDB");
+		logger.info("Running query " + query);
 		List<Staff> staffs = namedParameterJdbcTemplate.query(query, new StaffRowMapper());
 
 		logger.info("Staffs " + staffs);
@@ -33,12 +34,12 @@ public class StaffDBOps implements IStaffDBOps {
 	@Override
 	public boolean addStaffInDB(Staff staff) {
 		
-        String query = "INSERT INTO STAFF(staffId, staffName, dateOfBirth, staffRole) "
-    				 + "VALUES (:staffId, :staffName, :dateOfBirth, :staffRole)";
+        String query = "INSERT INTO STAFF(staffName, dateOfBirth, staffRole) "
+    				 + "VALUES (:staffName, :dateOfBirth, :staffRole)";
         logger.info("Running query " + query);
         
     	MapSqlParameterSource param = new MapSqlParameterSource()
-    	             .addValue("staffId", staff.getStaffId()).addValue("staffName", staff.getStaffName()).addValue("dateOfBirth", staff.getDateOfBirth()).addValue("staffRole", staff.getStaffRole());
+    	             .addValue("staffName", staff.getStaffName()).addValue("dateOfBirth", staff.getDateOfBirth()).addValue("staffRole", staff.getStaffRole());
 
 
 		int insertCount = namedParameterJdbcTemplate.update(query, param);
@@ -61,7 +62,7 @@ public class StaffDBOps implements IStaffDBOps {
 	@Override
 	public boolean updateStaffInDB(Integer staffId, Staff staff) {
 		
-        String query = "UPDATE STAFF staffId = :staffId, staffName = :staffName, dateOfBirth = :dateOfBirth, staffRole = :staffRole "
+        String query = "UPDATE STAFF staffName = :staffName, dateOfBirth = :dateOfBirth, staffRole = :staffRole "
 				     + "WHERE staffId = :staffId";
 		logger.info("Running query " + query);
 		MapSqlParameterSource param = new MapSqlParameterSource()

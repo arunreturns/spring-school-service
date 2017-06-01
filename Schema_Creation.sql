@@ -71,7 +71,7 @@ CREATE TABLE timetable (
   ADD_DATE TIMESTAMP,
   UPD_BY VARCHAR(25),
   UPD_DATE TIMESTAMP NOT NULL DEFAULT now()
-)
+);
 
 DROP TABLE IF EXISTS marks CASCADE;
 CREATE TABLE marks (
@@ -93,7 +93,7 @@ DROP TABLE IF EXISTS classroom CASCADE;
 CREATE TABLE classroom (
   classroomId SERIAL UNIQUE,
   classroomName VARCHAR(25) UNIQUE,
-  teacherInCharge VARCHAR(25),
+  teacherInCharge SERIAL REFERENCES teachers(teacherId),
   studentsInClass INT, 
   ADDED_BY VARCHAR(25),
   ADD_DATE TIMESTAMP,

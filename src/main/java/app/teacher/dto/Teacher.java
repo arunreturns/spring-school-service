@@ -6,7 +6,7 @@ public class Teacher {
     
 	private Integer teacherId;
 	private String teacherName;
-	private String yearsOfExperience;
+	private Integer yearsOfExperience;
 	private Date dateOfBirth;
 	private Date joiningDate;
 
@@ -26,10 +26,10 @@ public class Teacher {
 		this.teacherName = teacherName;
 	}
 
-    public String getYearsOfExperience() {
+    public Integer getYearsOfExperience() {
 		return yearsOfExperience;
 	}
-	public void setYearsOfExperience(String yearsOfExperience) {
+	public void setYearsOfExperience(Integer yearsOfExperience) {
 		this.yearsOfExperience = yearsOfExperience;
 	}
 

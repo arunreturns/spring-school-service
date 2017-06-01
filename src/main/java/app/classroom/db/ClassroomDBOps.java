@@ -34,12 +34,12 @@ public class ClassroomDBOps implements IClassroomDBOps {
 	@Override
 	public boolean addClassroomInDB(Classroom classroom) {
 		
-        String query = "INSERT INTO CLASSROOM(classroomId, classroomName, teacherInCharge, studentsInClass) "
-    				 + "VALUES (:classroomId, :classroomName, :teacherInCharge, :studentsInClass)";
+        String query = "INSERT INTO CLASSROOM(classroomName, teacherInCharge, studentsInClass) "
+    				 + "VALUES (:classroomName, :teacherInCharge, :studentsInClass)";
         logger.info("Running query " + query);
         
     	MapSqlParameterSource param = new MapSqlParameterSource()
-    	             .addValue("classroomId", classroom.getClassroomId()).addValue("classroomName", classroom.getClassroomName()).addValue("teacherInCharge", classroom.getTeacherInCharge()).addValue("studentsInClass", classroom.getStudentsInClass());
+    	             .addValue("classroomName", classroom.getClassroomName()).addValue("teacherInCharge", classroom.getTeacherInCharge()).addValue("studentsInClass", classroom.getStudentsInClass());
 
 
 		int insertCount = namedParameterJdbcTemplate.update(query, param);
@@ -62,7 +62,7 @@ public class ClassroomDBOps implements IClassroomDBOps {
 	@Override
 	public boolean updateClassroomInDB(Integer classroomId, Classroom classroom) {
 		
-        String query = "UPDATE CLASSROOM classroomId = :classroomId, classroomName = :classroomName, teacherInCharge = :teacherInCharge, studentsInClass = :studentsInClass "
+        String query = "UPDATE CLASSROOM classroomName = :classroomName, teacherInCharge = :teacherInCharge, studentsInClass = :studentsInClass "
 				     + "WHERE classroomId = :classroomId";
 		logger.info("Running query " + query);
 		MapSqlParameterSource param = new MapSqlParameterSource()
