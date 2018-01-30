@@ -3,6 +3,7 @@ package app.classroom.api;
 import java.util.List;
 
 import app.classroom.dto.Classroom;
+import app.student.dto.Student;
 
 public interface IClassroomService {
 	// Returns all the rows from DB as a List
@@ -19,4 +20,7 @@ public interface IClassroomService {
 
 	// Deletes a single Classroom entity in DB
 	public boolean deleteClassroomByIDService(Integer markId);
+	
+	// Returns all the students in a classroom
+	public List<Student> getStudentsInClassRoomService(Integer classroomId);
 }

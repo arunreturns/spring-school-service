@@ -11,8 +11,6 @@ public class Student {
 	private String parentEmail;
 	private Date dateOfBirth;
 
-    
-
     public Integer getStudentId() {
 		return studentId;
 	}

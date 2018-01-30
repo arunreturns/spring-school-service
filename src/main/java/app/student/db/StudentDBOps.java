@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import app.student.api.IStudentDBOps;
+import app.classroom.api.IClassroomDBOps;
 import app.student.dto.Student;
 
 @Service
@@ -19,7 +20,9 @@ public class StudentDBOps implements IStudentDBOps {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
+	@Autowired
+	private IClassroomDBOps classRoomDBOps;
+	
 	@Override
 	public List<Student> getStudentsFromDB() {
 		String query = "SELECT * FROM STUDENTS";
@@ -41,11 +44,13 @@ public class StudentDBOps implements IStudentDBOps {
     	MapSqlParameterSource param = new MapSqlParameterSource()
     	             .addValue("studentName", student.getStudentName()).addValue("studentClass", student.getStudentClass()).addValue("studentEmail", student.getStudentEmail()).addValue("parentEmail", student.getParentEmail()).addValue("dateOfBirth", student.getDateOfBirth());
 
-
 		int insertCount = namedParameterJdbcTemplate.update(query, param);
 		
+		boolean updatedInClass = classRoomDBOps.updateStudentsInClassRoom(student.getStudentClass(), 1);
+
 		logger.info("No of rows inserted: " + insertCount);
-		return insertCount > 0;
+		logger.info("No of rows updated in classroom: " + updatedInClass);
+		return insertCount > 0 & updatedInClass;
 	}
 
 	@Override
@@ -62,7 +67,7 @@ public class StudentDBOps implements IStudentDBOps {
 	@Override
 	public boolean updateStudentInDB(Integer studentId, Student student) {
 		
-        String query = "UPDATE STUDENTS studentName = :studentName, studentClass = :studentClass, studentEmail = :studentEmail, parentEmail = :parentEmail, dateOfBirth = :dateOfBirth "
+        String query = "UPDATE STUDENTS SET studentName = :studentName, studentClass = :studentClass, studentEmail = :studentEmail, parentEmail = :parentEmail, dateOfBirth = :dateOfBirth "
 				     + "WHERE studentId = :studentId";
 		logger.info("Running query " + query);
 		MapSqlParameterSource param = new MapSqlParameterSource()

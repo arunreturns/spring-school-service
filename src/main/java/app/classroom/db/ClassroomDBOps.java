@@ -11,7 +11,10 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import app.classroom.api.IClassroomDBOps;
+import app.classroom.db.ClassroomRowMapper;
 import app.classroom.dto.Classroom;
+import app.student.dto.Student;
+import app.student.db.StudentRowMapper;
 
 @Service
 public class ClassroomDBOps implements IClassroomDBOps {
@@ -62,12 +65,25 @@ public class ClassroomDBOps implements IClassroomDBOps {
 	@Override
 	public boolean updateClassroomInDB(Integer classroomId, Classroom classroom) {
 		
-        String query = "UPDATE CLASSROOM classroomName = :classroomName, teacherInCharge = :teacherInCharge, studentsInClass = :studentsInClass "
+        String query = "UPDATE CLASSROOM SET classroomName = :classroomName, teacherInCharge = :teacherInCharge, studentsInClass = :studentsInClass "
 				     + "WHERE classroomId = :classroomId";
 		logger.info("Running query " + query);
 		MapSqlParameterSource param = new MapSqlParameterSource()
 				     .addValue("classroomId", classroom.getClassroomId()).addValue("classroomName", classroom.getClassroomName()).addValue("teacherInCharge", classroom.getTeacherInCharge()).addValue("studentsInClass", classroom.getStudentsInClass());
 
+
+		int updateCount = namedParameterJdbcTemplate.update(query, param);
+		logger.info("No of rows updated: " + updateCount);
+		return updateCount > 0;
+	}
+	
+	@Override
+	public boolean updateStudentsInClassRoom(String classroomName, Integer studentsInClass) {
+		
+        String query = "UPDATE CLASSROOM SET studentsInClass = :studentsInClass WHERE classroomName = :classroomName";
+		logger.info("Running query " + query);
+		MapSqlParameterSource param = new MapSqlParameterSource()
+				     .addValue("classroomName", classroomName).addValue("studentsInClass", studentsInClass);
 
 		int updateCount = namedParameterJdbcTemplate.update(query, param);
 		logger.info("No of rows updated: " + updateCount);
@@ -84,6 +100,20 @@ public class ClassroomDBOps implements IClassroomDBOps {
 
 		logger.info("No of rows deleted: " + deletedCount);
 		return deletedCount > 0;
+	}
+	
+	@Override
+	public List<Student> getStudentsInClassRoomFromDB(Integer classroomId) {
+		String query = "SELECT * FROM STUDENT s, CLASSROOM c WHERE c.classroomId = :classroomId AND s.studentClass = c.classroomName";
+		logger.info("Running query " + query);
+		
+		MapSqlParameterSource param = new MapSqlParameterSource().addValue("classroomId", classroomId);
+		
+		List<Student> students = namedParameterJdbcTemplate.query(query, param, new StudentRowMapper());
+
+		logger.info("Students " + students);
+		
+		return students;
 	}
 
 }

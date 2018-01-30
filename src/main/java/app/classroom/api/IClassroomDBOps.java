@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import app.classroom.dto.Classroom;
+import app.student.dto.Student;
 
 public interface IClassroomDBOps {
 	// Get all rows from DB
@@ -20,4 +21,10 @@ public interface IClassroomDBOps {
 	
 	// Delete a specific row from DB
 	public boolean deleteClassroomByIDFromDB(Integer classroomId);
+	
+	// Update number of students in classroom
+	public boolean updateStudentsInClassRoom(String classroomName, Integer studentsInClass);
+	
+	// Returns all the students in a classroom
+	public List<Student> getStudentsInClassRoomFromDB(Integer classroomId);
 }

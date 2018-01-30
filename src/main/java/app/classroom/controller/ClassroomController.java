@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.classroom.api.IClassroomService;
 import app.classroom.dto.Classroom;
+import app.student.dto.Student;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -61,5 +62,12 @@ public class ClassroomController {
 	public boolean deleteClassroomByID(@PathVariable Integer classroomId) {
 		logger.info("Inside deleteClassroomByID");
 		return classroomService.deleteClassroomByIDService(classroomId);
+	}
+	
+	@RequestMapping(path="/classroom/{classroomId}/students", method = RequestMethod.GET)
+	@ApiOperation(value = "Gets the list of students in the classroom", response = List.class)
+	public List<Student> getStudentsInClassRoom(@PathVariable Integer classroomId) {
+		logger.info("Inside getStudentsInClassRoom");
+		return classroomService.getStudentsInClassRoomService(classroomId);
 	}
 }

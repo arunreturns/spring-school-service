@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import app.classroom.api.IClassroomDBOps;
 import app.classroom.api.IClassroomService;
 import app.classroom.dto.Classroom;
+import app.student.dto.Student;
 
 @Service
 public class ClassroomService implements IClassroomService {
@@ -52,4 +53,10 @@ public class ClassroomService implements IClassroomService {
 		return dbOps.deleteClassroomByIDFromDB(classroomId);
 	}
 	
+	@Override
+	public List<Student> getStudentsInClassRoomService(Integer classroomId) {
+		logger.info("Inside getStudentsInClassRoomService");
+		logger.info("Getting students list for ID: " + classroomId);
+		return dbOps.getStudentsInClassRoomFromDB(classroomId);
+	}
 }

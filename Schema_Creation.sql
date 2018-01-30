@@ -76,7 +76,7 @@ CREATE TABLE timetable (
 DROP TABLE IF EXISTS marks CASCADE;
 CREATE TABLE marks (
   markId SERIAL UNIQUE,
-  subjectName VARCHAR(25),
+  subjectName VARCHAR(25) REFERENCES subject(subjectName),
   marks INT, 
   studentId SERIAL REFERENCES students(studentId),
   studentName VARCHAR(25),
@@ -93,7 +93,7 @@ DROP TABLE IF EXISTS classroom CASCADE;
 CREATE TABLE classroom (
   classroomId SERIAL UNIQUE,
   classroomName VARCHAR(25) UNIQUE,
-  teacherInCharge SERIAL REFERENCES teachers(teacherId),
+  teacherInCharge VARCHAR(25),
   studentsInClass INT, 
   ADDED_BY VARCHAR(25),
   ADD_DATE TIMESTAMP,
